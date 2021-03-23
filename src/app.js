@@ -29,7 +29,6 @@ app.use(function validateBearerToken(req, res, next) {
   if (!authToken || authToken.split(" ")[1] !== apiToken) {
     return res.status(401).json({ error: 'Unauthorized request' })
   }
-  // move to the next middleware
   next()
 })
 
