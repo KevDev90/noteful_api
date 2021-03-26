@@ -6,10 +6,8 @@ const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const notesRouter = require('./notes/notes-router')
 const foldersRouter = require('./folders/folders-router')
-const { API_TOKEN } = require('./config')
 const bodyParser = require('body-parser')
 const app = express()
-
 
 const morganOption = (NODE_ENV === 'production')
   ? 'tiny'
@@ -23,7 +21,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 app.use((req, res, next) => {
-  console.log('req====>',req.headers,'body------>', req.body)
   next()
 })
 
@@ -31,13 +28,9 @@ app.use(function validateBearerToken(req, res, next) {
   const apiToken = process.env.API_TOKEN
   const authToken = req.header('Authorization')
 
-
-
-  console.log('authtoken========', authToken.split(" ")[1],'=======req.aut',req.authorization, 'APITOKEN======',apiToken)
   if (!authToken || authToken.split(" ")[1] != apiToken) {
     return res.status(401).json({ error: 'Unauthorized request' })
   }
-  console.log('')
   next()
 })
 
