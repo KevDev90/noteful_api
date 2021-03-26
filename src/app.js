@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 })
 
 app.use(function validateBearerToken(req, res, next) {
-  const apiToken = JSON.parse(process.env).API_TOKEN
+  const apiToken = process.env.API_TOKEN
   const authToken = req.header('Authorization')
 
 
