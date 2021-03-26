@@ -6,7 +6,7 @@ const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const notesRouter = require('./notes/notes-router')
 const foldersRouter = require('./folders/folders-router')
-
+const { API_TOKEN } = require('./config')
 const app = express()
 
 const morganOption = (NODE_ENV === 'production')
@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 })
 
 app.use(function validateBearerToken(req, res, next) {
-  const apiToken = process.env.API_TOKEN
+  const apiToken = API_TOKEN
   const authToken = req.header('Authorization')
 
   console.log('authtoken========', authToken, 'APITOKEN======', apiToken)
