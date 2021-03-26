@@ -7,7 +7,9 @@ const { NODE_ENV } = require('./config')
 const notesRouter = require('./notes/notes-router')
 const foldersRouter = require('./folders/folders-router')
 const { API_TOKEN } = require('./config')
+const bodyParser = require('body-parser')
 const app = express()
+
 
 const morganOption = (NODE_ENV === 'production')
   ? 'tiny'
@@ -16,6 +18,10 @@ const morganOption = (NODE_ENV === 'production')
 app.use(morgan(morganOption))
 app.use(helmet())
 app.use(cors())
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 app.use((req, res, next) => {
   console.log('req====>',req.headers,'body------>', req.body)
   next()
